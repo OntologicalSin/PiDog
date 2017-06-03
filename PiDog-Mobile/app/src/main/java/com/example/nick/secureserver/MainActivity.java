@@ -1,7 +1,5 @@
 package com.example.nick.secureserver;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.Button;
 import android.graphics.Color;
 import android.content.res.Resources;
 import android.util.TypedValue;
@@ -19,7 +16,6 @@ import android.view.View.OnClickListener;
 import android.speech.RecognitionListener;
 import java.util.ArrayList;
 import android.speech.RecognizerIntent;
-import android.widget.TextView;
 import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import java.util.Locale;
@@ -27,7 +23,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity{
     private Client client;
-    private TextView mText;
     private SpeechRecognizer sr;
     private static final String TAG = "MyStt3Activity";
     private final int REQ_CODE_SPEECH_INPUT = 100;
@@ -42,19 +37,16 @@ public class MainActivity extends AppCompatActivity{
         Resources r = getResources();
         int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,200,r.getDisplayMetrics());
 
-
-
         ImageButton speakButton = new ImageButton(this);
-        //speakButton.setText("Speak");
-        //speakButton.setWidth(500);
-        //speakButton.setHeight(500);
+        speakButton.setImageResource(R.drawable.speak_button);
+
         new Thread(new Runnable(){
             public void run() {
                 try {
                     client = new Client("10.1.107.198", 420);
                     client.establish();
                 } catch (Exception e) {
-                    Log.d("EW", e.getMessage());
+                    Log.d("Error", e.getMessage());
 
                 }
             }
@@ -68,20 +60,13 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onClick(View v) {
-
-
                 promptSpeechInput();
-
             }
         });
 
-
-
         RelativeLayout.LayoutParams buttonDetails = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT );
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT );
 
-        buttonDetails.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        buttonDetails.addRule(RelativeLayout.CENTER_VERTICAL);
 
         layout.addView(speakButton,buttonDetails);
 
@@ -97,11 +82,12 @@ public class MainActivity extends AppCompatActivity{
             startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
         }
          catch (ActivityNotFoundException a) {
+             Log.d("Error", a.getMessage());
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
@@ -118,7 +104,7 @@ public class MainActivity extends AppCompatActivity{
 
         }
     }
-    class listener implements RecognitionListener
+     private class listener implements RecognitionListener
     {
         public void onReadyForSpeech(Bundle params)
         {
@@ -150,14 +136,20 @@ public class MainActivity extends AppCompatActivity{
             String str = "";
             Log.d(TAG, "onResults " + results);
             ArrayList data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            for (int i = 0; i < data.size(); i++)
-            {
-                if(i!=data.size()-1)
-                    str += data.get(i)+" ";
-                else
-                    str+=data.get(i);
+            try {
+
+                for (int i = 0; i < data.size(); i++) {
+                    if (i != data.size() - 1)
+                        str += data.get(i) + " ";
+                    else
+                        str += data.get(i);
+                }
+                client.send(str);
             }
-            client.send(str);
+            catch(java.lang.NullPointerException e)
+            {
+                Log.d("Error", e.getMessage());
+            }
         }
         public void onPartialResults(Bundle partialResults)
         {
