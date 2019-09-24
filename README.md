@@ -5,7 +5,7 @@ The project is no longer being maintained and has been left in a rough state aft
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Clone this repo to your local machine using `https://github.com/OntologicalSin/PiDog.git`
 
 ## Deployment
 
