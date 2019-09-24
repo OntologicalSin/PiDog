@@ -3,8 +3,6 @@
 PiDog is a Java application developed to replace the need for special needs dogs. The project was conceived for ChicagoHacks 2017
 The project is no longer being maintained and has been left in a rough state after the completetion of the hackathon.
 
-Authors: Nick Lyubenko & Mark Muranov
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -21,4 +19,4 @@ NO THIRD PARTY LIBRARIES
 ## Authors
 
 * **Nicholas Lyubenko** - (https://github.com/OntologicalSin)
-* **Abhinav Pappu** - (https://github.com/apappu9)
+* **Mark Maranov** - (https://github.com/)
