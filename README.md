@@ -14,7 +14,7 @@ PiDog-Mobile must be deployed on an Android Phone connected to the same network 
 
 ## Built With
 
-NO THIRD PARTY LIBRARIES
+Java and Java for Android - NO THIRD PARTY LIBRARIES
 
 ## Authors
 
